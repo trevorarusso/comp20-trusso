@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Union Strike Folk Song</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+<h1 id="title">Union Strike Folk Song</h1>
+
+<video src="https://www.cs.tufts.edu/comp/20/butwehavethepower.mp4" id="butwehavethepower" controls></video>
+<div id="lyrics"></div>
+
+<script type="text/javascript">
+	var video = document.getElementById("butwehavethepower");
+	var lyrics = document.getElementById("lyrics");
+
+	song = new Array();
+	song[0] = "Lisa: Come gather round, children,";
+	song[1] = "It's high time ye learned";
+	song[2] = "'Bout a hero named Homer";
+	song[3] = "And a devil named Burns.";
+	song[4] = "We'll march 'till we drop";
+	song[5] = "The girls and the fellas.";
+	song[6] = "We'll fight 'till the death";
+	song[7] = "Or else fold like umbrellas.";
+	song[8] = "So we'll march day and night";
+	song[9] = "By the big cooling tower.";
+	song[10] = "They have the plant";
+	song[11] = "But we have the power.";
+	song[12] = 'Lenny: Now do "Classical Gas!"';
+	video.addEventListener("timeupdate", function() {
+		console.log("Beginning Loop");
+		if (video.currentTime > 6 && video.currentTime < 9) { 
+			lyrics.innerHTML = song[0];
+		}
+		else if (video.currentTime > 9 && video.currentTime < 11.3) { 
+			lyrics.innerHTML = song[1];
+		}
+		else if (video.currentTime > 11.3 && video.currentTime < 13.5) { 
+			lyrics.innerHTML = song[2];
+		}
+		else if (video.currentTime > 13.5 && video.currentTime < 17) { 
+			lyrics.innerHTML = song[3];
+		}
+		else if (video.currentTime > 17 && video.currentTime < 19) { 
+			lyrics.innerHTML = song[4];
+		}
+		else if (video.currentTime > 19 && video.currentTime < 22) { 
+			lyrics.innerHTML = song[5];
+		}
+		else if (video.currentTime > 22 && video.currentTime < 24) { 
+			lyrics.innerHTML = song[6];
+		}
+		else if (video.currentTime > 24 && video.currentTime < 27) { 
+			lyrics.innerHTML = song[7];
+		}
+		else if (video.currentTime > 38 && video.currentTime < 41) { 
+			lyrics.innerHTML = song[8];
+		}
+		else if (video.currentTime > 41 && video.currentTime < 43) { 
+			lyrics.innerHTML = song[9];
+		}
+		else if (video.currentTime > 43 && video.currentTime < 45.5) { 
+			lyrics.innerHTML = song[10];
+		}
+		else if (video.currentTime > 45.5 && video.currentTime < 50) { 
+			lyrics.innerHTML = song[11];
+		}
+		else if (video.currentTime > 53 && video.currentTime < 55) { 
+			lyrics.innerHTML = song[12];
+		}
+		else if (video.currentTime > 73 && video.currentTime < 75) { 
+			lyrics.innerHTML = song[8];
+		}
+		else if (video.currentTime > 75 && video.currentTime < 78) { 
+			lyrics.innerHTML = song[9];
+		}
+		else if (video.currentTime > 78 && video.currentTime < 80) { 
+			lyrics.innerHTML = song[10];
+		}
+		else if (video.currentTime > 80 && video.currentTime < 82.5) { 
+			lyrics.innerHTML = song[11];
+		}
+		else if (video.currentTime > 82.5 && video.currentTime < 85) { 
+			lyrics.innerHTML = song[8];
+		}
+		else if (video.currentTime > 85 && video.currentTime < 87.5) { 
+			lyrics.innerHTML = song[9];
+		}
+		else if (video.currentTime > 87.5 && video.currentTime < 89.3) { 
+			lyrics.innerHTML = song[10];
+		}
+		else if (video.currentTime > 89.3 && video.currentTime < 92) { 
+			lyrics.innerHTML = song[11];
+		}
+		else {
+			lyrics.innerHTML = "";
+		}
+	}, false);
+
+</script>
+</body>
+</html>	
