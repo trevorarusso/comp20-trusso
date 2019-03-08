@@ -23,21 +23,23 @@
 				}
 				myMap = new google.maps.Map(document.getElementById("myMap"), myOptions);
 				acquireLocation();
-				createMyMarker();
-				reqRespHeroku();
+				//reqRespHeroku();
 			}
 			//getting the location
 			function acquireLocation(){
 				if(navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
-						curLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+						curLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+						console.log("Whyyyyyyyyyyyyyyy"+ curLoc);
 						myMap.panTo(curLoc);
+						createMyMarker();
 					});
 				}
 				else {
 					alert("Geolocation doesn't work on this browser...");
 				}
 				console.log("Testing here...");
+				console.log("T2st" + curLoc);
 				console.log("end heroku");
 			}
 			function createMyMarker(){
@@ -45,10 +47,10 @@
 				var myMarker = new google.maps.Marker({
 					position: curLoc,
 					map: myMap,
-					image: "putin.jpeg" 
+					image: 'putin.jpeg' 
 				});
 			}
-			function reqRespHeroku() {
+/*			function reqRespHeroku() {
 				var xml = new XMLHttpRequest();
 				xml.open("POST", "https://hans-moleman.herokuapp.com/rides", true);
 				xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -110,7 +112,7 @@
 					closWiener = dist;
 				}
 				return dist;
-			}
+			}*/
 		</script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9sQaGQMUn1TEZG3C11LjRlpQAppS4WGk&callback=initMap" async defer></script>
 	</body>
