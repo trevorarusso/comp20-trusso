@@ -63,7 +63,7 @@
 
 			}
 			function buildString(){
-				var myString = '<h1>6MZk3neb&lat</h1>' +
+				var myString = '<h1>6MZk3neb</h1>' +
 						'<p>Closest ' + ' away is ' + ',' + 'mi away!</p>';
 				if (closWiener == Number.MAX_Value){
 					myString += 'Oh no! Can\'t find the Wienermobile!';
@@ -81,8 +81,8 @@
 					//console.log(xml.readyState + "jfkdsl" + "xml.status" + xml.status);
 					if(xml.readyState == 4 && xml.status == 200) {
 						console.log("Recieved Data");
-						console.log(myData);
 						myData = JSON.parse(xml.responseText);
+						console.log(myData);
 						if("vehicles" in myData) {
 							vehMap = true;
 						}
@@ -121,9 +121,14 @@
 				var infowindow = new google.maps.InfoWindow({
 					content: idMark['username'] + "is" + distanceBW + "miles away!"
 				});
+				objMarker.addListener('click', function() {
+          				infowindow.open(myMap, objMarker);
+        			});
+
 			}
 			function chooseImage(vehPas, user) {
 				if(user == "WEINERMOBILE"){
+					console.log("meatywieners");
 					return "weinermobile.png";
 				}
 				else if(vehPas == "vehicles") {
@@ -141,6 +146,7 @@
 				if(user == "WEINERMOBILE" && dist < closWiener) {
 					closWiener = dist;
 				}
+				dist /= 1609.344;
 				return dist;
 			}
 		</script>
