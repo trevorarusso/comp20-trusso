@@ -71,7 +71,7 @@
 					vehString = 'passenger';
 				}
 				var myString = '<h1>6MZk3neb</h1>' +
-						'<p>Closest ' + vehString + ' away is ' + closMarkName + ',' + closMark + 'mi away!</p>';
+						'<p>Closest ' + vehString + ' away is ' + closMarkName + ', ' + closMark + 'mi away!</p>';
 				if (closWiener == Number.MAX_Value){
 					myString += 'Oh no! Can\'t find the Wienermobile!';
 				}
@@ -128,7 +128,8 @@
 				});
 				var distanceBW = distCheck(theLoc, idMark['username']);
 				var infowindow = new google.maps.InfoWindow({
-					content: idMark['username'] + "is" + distanceBW + "miles away!"
+					content: "<h2>" + idMark['username'] + "</h2>" + 
+						"<p>They're" + distanceBW + "miles away!</p>"
 				});
 				objMarker.addListener('click', function() {
           				infowindow.open(myMap, objMarker);
