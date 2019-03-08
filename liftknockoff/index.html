@@ -42,7 +42,8 @@
 				console.log("end heroku");
 			}
 			function createMyMarker(){
-				var myMarker = google.maps.Marker({
+				console.log(curLoc.lng());
+				var myMarker = new google.maps.Marker({
 					position: curLoc,
 					map: myMap,
 					image: "putin.jpeg" 
@@ -80,7 +81,7 @@
 				}
 				theLoc = new google.maps.LatLng(idMark[objType]['lat'], idMark[objType]['lng']);
 				var imgURL = chooseImage(objType, idMark[objType]['username']);
-				var objMarker = google.maps.Marker({
+				var objMarker = new google.maps.Marker({
 					position: theLoc,
 					map: myMap,
 					image: imgURL
