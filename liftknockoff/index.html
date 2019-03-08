@@ -50,10 +50,14 @@
 					map: myMap,
 					icon: 'foles.jpg' 
 				});
-				var contentString: buildString();
+				var contentString = buildString();
 				var myWindow = new google.maps.InfoWindow({
 					content: contentString 
 				}
+				myMarker.addListener('click', function() {
+          				myWindow.open(myMap, myMarker);
+        			});
+
 			}
 			function buildString(){
 				var myString = '<h1>6MZk3neb&lat</h1>' +
