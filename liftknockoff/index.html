@@ -32,8 +32,8 @@
 						curLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 						console.log("Whyyyyyyyyyyyyyyy"+ curLoc);
 						myMap.panTo(curLoc);
-						createMyMarker();
 						reqRespHeroku();
+						createMyMarker();
 					});
 				}
 				else {
@@ -69,7 +69,7 @@
 					myString += 'Oh no! Can\'t find the Wienermobile!';
 				}
 				else {
-					myString += 'The Wienermobile is ' + 'mi away!';
+					myString += 'The Wienermobile is ' + closWiener + 'mi away!';
 				}
 				return myString;
 			}
@@ -108,7 +108,7 @@
 					objType = 'vehicles';
 				}
 				else {
-					objType = "passengers";
+					objType = 'passengers';
 				}
 				theLoc = new google.maps.LatLng(idMark['lat'], idMark['lng']);
 				var imgURL = chooseImage(objType, idMark['username']);
@@ -128,7 +128,6 @@
 			}
 			function chooseImage(vehPas, user) {
 				if(user == "WEINERMOBILE"){
-					console.log("meatywieners");
 					return "weinermobile.png";
 				}
 				else if(vehPas == "vehicles") {
@@ -140,13 +139,15 @@
 			}
 			function distCheck(latLon, user) {
 				dist = google.maps.geometry.spherical.computeDistanceBetween(curLoc, latLon);
+				dist /= 1609.344;
 				if(dist < closMark) {
 					closMark = dist;
 				}
 				if(user == "WEINERMOBILE" && dist < closWiener) {
+					console.log("meatywieners"+ dist);
 					closWiener = dist;
+					console.log("wiener" + closWiener);
 				}
-				dist /= 1609.344;
 				return dist;
 			}
 		</script>
