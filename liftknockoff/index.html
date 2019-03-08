@@ -14,7 +14,7 @@
 			var curLoc;
 			var closWiener = Number.MAX_VALUE;
 			var closMark = Number.MAX_VALUE;
-			var passOrVeh;
+			var vehMap;
 			//setting up map
 			function initMap() {
 				console.log("Test"+ curLoc);
@@ -24,7 +24,6 @@
 				}
 				myMap = new google.maps.Map(document.getElementById("myMap"), myOptions);
 				acquireLocation();
-				//reqRespHeroku();
 			}
 			//getting the location
 			function acquireLocation(){
@@ -34,6 +33,7 @@
 						console.log("Whyyyyyyyyyyyyyyy"+ curLoc);
 						myMap.panTo(curLoc);
 						createMyMarker();
+						reqRespHeroku();
 					});
 				}
 				else {
@@ -57,28 +57,38 @@
 				myMarker.addListener('click', function() {
           				myWindow.open(myMap, myMarker);
         			});
+				myMap.addListener('click', function() {
+					myWindow.close();
+				});
 
 			}
 			function buildString(){
 				var myString = '<h1>6MZk3neb&lat</h1>' +
 						'<p>Closest ' + ' away is ' + ',' + 'mi away!</p>';
-		/*		if (closWeiner == Number.MAX_Value){
+				if (closWiener == Number.MAX_Value){
 					myString += 'Oh no! Can\'t find the Wienermobile!';
 				}
 				else {
 					myString += 'The Wienermobile is ' + 'mi away!';
-				}*/
+				}
 				return myString;
 			}
-/*			function reqRespHeroku() {
+			function reqRespHeroku() {
 				var xml = new XMLHttpRequest();
 				xml.open("POST", "https://hans-moleman.herokuapp.com/rides", true);
 				xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				xml.onreadystatechange = function () {
+					//console.log(xml.readyState + "jfkdsl" + "xml.status" + xml.status);
 					if(xml.readyState == 4 && xml.status == 200) {
 						console.log("Recieved Data");
+						console.log(myData);
 						myData = JSON.parse(xml.responseText);
-						console.log(Object.values(myData));
+						if("vehicles" in myData) {
+							vehMap = true;
+						}
+						else {
+							vehMap = false;
+						}
 						for (i = 0; i < myData['vehicles'].length; i++) {
 							console.log("Success?");
 							createMarkers(myData['vehicles'][i]);
@@ -94,22 +104,22 @@
 			function createMarkers(idMark) {
 				var theLoc; 				
 				var objType;
-				if("vehicles" in idMark) {
-					objType = "vehicles";
+				if(vehMap) {
+					objType = 'vehicles';
 				}
 				else {
 					objType = "passengers";
 				}
-				theLoc = new google.maps.LatLng(idMark[objType]['lat'], idMark[objType]['lng']);
-				var imgURL = chooseImage(objType, idMark[objType]['username']);
+				theLoc = new google.maps.LatLng(idMark['lat'], idMark['lng']);
+				var imgURL = chooseImage(objType, idMark['username']);
 				var objMarker = new google.maps.Marker({
 					position: theLoc,
 					map: myMap,
-					image: imgURL
+					icon: imgURL
 				});
-				var distanceBW = distCheck(theLoc, idMark[objType]['username']);
-				var infowindow = new google.maps.infoWindow({
-					content: idMark[objType]['username'] + "is" + distanceBW + "miles away!"
+				var distanceBW = distCheck(theLoc, idMark['username']);
+				var infowindow = new google.maps.InfoWindow({
+					content: idMark['username'] + "is" + distanceBW + "miles away!"
 				});
 			}
 			function chooseImage(vehPas, user) {
@@ -123,7 +133,7 @@
 					return "passenger.png";
 				}
 			}
-			function distCheck(latlon, user) {
+			function distCheck(latLon, user) {
 				dist = google.maps.geometry.spherical.computeDistanceBetween(curLoc, latLon);
 				if(dist < closMark) {
 					closMark = dist;
@@ -132,8 +142,8 @@
 					closWiener = dist;
 				}
 				return dist;
-			}*/
+			}
 		</script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9sQaGQMUn1TEZG3C11LjRlpQAppS4WGk&callback=initMap" async defer></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9sQaGQMUn1TEZG3C11LjRlpQAppS4WGk&callback=initMap&libraries=geometry" async defer></script>
 	</body>
 </html>
