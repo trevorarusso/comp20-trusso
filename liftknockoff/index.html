@@ -12,6 +12,7 @@
 		<script>
 			var myMap;
 			var curLoc;
+			var closMarkName;
 			var closWiener = Number.MAX_VALUE;
 			var closMark = Number.MAX_VALUE;
 			var vehMap;
@@ -33,7 +34,6 @@
 						console.log("Whyyyyyyyyyyyyyyy"+ curLoc);
 						myMap.panTo(curLoc);
 						reqRespHeroku();
-						createMyMarker();
 					});
 				}
 				else {
@@ -63,12 +63,20 @@
 
 			}
 			function buildString(){
+				var vehString;
+				if(vehMap) {
+					vehString = 'vehicle';
+				}
+				else {
+					vehString = 'passenger';
+				}
 				var myString = '<h1>6MZk3neb</h1>' +
-						'<p>Closest ' + ' away is ' + ',' + 'mi away!</p>';
+						'<p>Closest ' + vehString + ' away is ' + closMarkName + ',' + closMark + 'mi away!</p>';
 				if (closWiener == Number.MAX_Value){
 					myString += 'Oh no! Can\'t find the Wienermobile!';
 				}
 				else {
+					console.log("Here is the value:" + closWiener);
 					myString += 'The Wienermobile is ' + closWiener + 'mi away!';
 				}
 				return myString;
@@ -93,6 +101,7 @@
 							console.log("Success?");
 							createMarkers(myData['vehicles'][i]);
 						}
+						createMyMarker();
 						
 					}
 					else {
@@ -142,6 +151,7 @@
 				dist /= 1609.344;
 				if(dist < closMark) {
 					closMark = dist;
+		     			closMarkName = user;
 				}
 				if(user == "WEINERMOBILE" && dist < closWiener) {
 					console.log("meatywieners"+ dist);
