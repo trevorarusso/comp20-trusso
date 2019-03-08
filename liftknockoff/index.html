@@ -14,6 +14,7 @@
 			var curLoc;
 			var closWiener = Number.MAX_VALUE;
 			var closMark = Number.MAX_VALUE;
+			var passOrVeh;
 			//setting up map
 			function initMap() {
 				console.log("Test"+ curLoc);
@@ -49,6 +50,21 @@
 					map: myMap,
 					icon: 'foles.jpg' 
 				});
+				var contentString: buildString();
+				var myWindow = new google.maps.InfoWindow({
+					content: contentString 
+				}
+			}
+			function buildString(){
+				var myString = '<h1>6MZk3neb&lat</h1>' +
+						'<p>Closest ' + ' away is ' + ',' + 'mi away!</p>';
+		/*		if (closWeiner == Number.MAX_Value){
+					myString += 'Oh no! Can\'t find the Wienermobile!';
+				}
+				else {
+					myString += 'The Wienermobile is ' + 'mi away!';
+				}*/
+				return myString;
 			}
 /*			function reqRespHeroku() {
 				var xml = new XMLHttpRequest();
