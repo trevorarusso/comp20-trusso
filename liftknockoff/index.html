@@ -53,7 +53,7 @@
 				var contentString = buildString();
 				var myWindow = new google.maps.InfoWindow({
 					content: contentString 
-				}
+				});
 				myMarker.addListener('click', function() {
           				myWindow.open(myMap, myMarker);
         			});
