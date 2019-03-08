@@ -16,14 +16,15 @@
 			var closMark = Number.MAX_VALUE;
 			//setting up map
 			function initMap() {
-				curLoc = new google.maps.LatLng(0, 0);
 				console.log("Test"+ curLoc);
-				acquireLocation();
 				var myOptions = {
 					zoom: 17,
-					center: curLoc, 
+					center: curLoc 
 				}
 				myMap = new google.maps.Map(document.getElementById("myMap"), myOptions);
+				acquireLocation();
+				createMyMarker();
+				reqRespHeroku();
 			}
 			//getting the location
 			function acquireLocation(){
@@ -37,8 +38,6 @@
 					alert("Geolocation doesn't work on this browser...");
 				}
 				console.log("Testing here...");
-				createMyMarker();
-				reqRespHeroku();
 				console.log("end heroku");
 			}
 			function createMyMarker(){
@@ -58,9 +57,9 @@
 						console.log("Recieved Data");
 						myData = JSON.parse(xml.responseText);
 						console.log(Object.values(myData));
-						for (i = 0; i < myData.length; i++) {
+						for (i = 0; i < myData['vehicles'].length; i++) {
 							console.log("Success?");
-							createMarkers(myData[i]);
+							createMarkers(myData['vehicles'][i]);
 						}
 						
 					}
