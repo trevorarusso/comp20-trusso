@@ -16,6 +16,7 @@
 			var closWiener = Number.MAX_VALUE;
 			var closMark = Number.MAX_VALUE;
 			var vehMap;
+			var infoWindow;
 			//setting up map
 			function initMap() {
 				console.log("Test"+ curLoc);
@@ -51,16 +52,10 @@
 					icon: 'foles.jpg' 
 				});
 				var contentString = buildString();
-				var myWindow = new google.maps.InfoWindow({
-					content: contentString 
-				});
-				myMarker.addListener('click', function() {
-          				myWindow.open(myMap, myMarker);
-        			});
-				myMap.addListener('click', function() {
-					myWindow.close();
-				});
-
+				google.maps.event.addListener(myMarker, 'click', function () {
+                                	infoWindow.setContent(contentString);
+                                	infoWindow.open(myMap, this);
+                            	});
 			}
 			function buildString(){
 				var vehString;
@@ -97,6 +92,7 @@
 						else {
 							vehMap = false;
 						}
+						infoWindow = new google.maps.InfoWindow();
 						for (i = 0; i < myData['vehicles'].length; i++) {
 							console.log("Success?");
 							createMarkers(myData['vehicles'][i]);
@@ -127,14 +123,11 @@
 					icon: imgURL
 				});
 				var distanceBW = distCheck(theLoc, idMark['username']);
-				var infowindow = new google.maps.InfoWindow({
-					content: "<h2>" + idMark['username'] + "</h2>" + 
-						"<p>They're " + distanceBW + "mi away!</p>"
-				});
-				objMarker.addListener('click', function() {
-          				infowindow.open(myMap, objMarker);
-        			});
-
+		     		var othString = "<h2>" + idMark['username'] + "</h2>" + "<p>They're " + distanceBW + "mi away!</p>"
+				google.maps.event.addListener(objMarker, 'click', function () {
+                                	infoWindow.setContent(othString);
+                                	infoWindow.open(myMap, this);
+                            	});
 			}
 			function chooseImage(vehPas, user) {
 				if(user == "WEINERMOBILE"){
