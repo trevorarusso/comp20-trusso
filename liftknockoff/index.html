@@ -19,7 +19,6 @@
 			var infoWindow;
 			//setting up map
 			function initMap() {
-				console.log("Test"+ curLoc);
 				var myOptions = {
 					zoom: 17,
 					center: curLoc 
@@ -32,7 +31,6 @@
 				if(navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						curLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-						console.log("Whyyyyyyyyyyyyyyy"+ curLoc);
 						myMap.panTo(curLoc);
 						reqRespHeroku();
 					});
@@ -40,12 +38,8 @@
 				else {
 					alert("Geolocation doesn't work on this browser...");
 				}
-				console.log("Testing here...");
-				console.log("T2st" + curLoc);
-				console.log("end heroku");
 			}
 			function createMyMarker(){
-				console.log(curLoc.lng());
 				var myMarker = new google.maps.Marker({
 					position: curLoc,
 					map: myMap,
@@ -71,7 +65,6 @@
 					myString += 'Oh no! Can\'t find the Wienermobile!';
 				}
 				else {
-					console.log("Here is the value:" + closWiener);
 					myString += 'The Wienermobile is ' + closWiener + 'mi away!';
 				}
 				return myString;
@@ -81,11 +74,8 @@
 				xml.open("POST", "https://hans-moleman.herokuapp.com/rides", true);
 				xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				xml.onreadystatechange = function () {
-					//console.log(xml.readyState + "jfkdsl" + "xml.status" + xml.status);
 					if(xml.readyState == 4 && xml.status == 200) {
-						console.log("Recieved Data");
 						myData = JSON.parse(xml.responseText);
-						console.log(myData);
 						if("vehicles" in myData) {
 							vehMap = true;
 						}
@@ -94,14 +84,13 @@
 						}
 						infoWindow = new google.maps.InfoWindow();
 						for (i = 0; i < myData['vehicles'].length; i++) {
-							console.log("Success?");
 							createMarkers(myData['vehicles'][i]);
 						}
 						createMyMarker();
 						
 					}
 					else {
-						console.log("something's wrong...");
+						alert("Couldn't get the JSON");
 					}
 				}
 				xml.send("username=6MZk3neb&lat="+ curLoc.lat() +"&lng="+ curLoc.lng());
@@ -148,9 +137,7 @@
 		     			closMarkName = user;
 				}
 				if(user == "WEINERMOBILE" && dist < closWiener) {
-					console.log("meatywieners"+ dist);
 					closWiener = dist;
-					console.log("wiener" + closWiener);
 				}
 				return dist;
 			}
