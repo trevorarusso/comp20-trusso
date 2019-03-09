@@ -89,7 +89,7 @@
 						createMyMarker();
 						
 					}
-					else {
+					else if(xml.readyState == 4 && xml.status != 200){
 						alert("Couldn't get the JSON");
 					}
 				}
