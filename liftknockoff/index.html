@@ -71,7 +71,7 @@
 			}
 			function reqRespHeroku() {
 				var xml = new XMLHttpRequest();
-				xml.open("POST", "https://nameless-ocean-92240.herokuapp.com/rides", true);
+				xml.open("POST", "https://intense-woodland-74002.herokuapp.com/rides", true);
 				xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				xml.onreadystatechange = function () {
 					if(xml.readyState == 4 && xml.status == 200) {
@@ -83,8 +83,8 @@
 							vehMap = false;
 						}
 						infoWindow = new google.maps.InfoWindow();
-						for (i = 0; i < myData['vehicles'].length; i++) {
-							createMarkers(myData['vehicles'][i]);
+						for (i = 0; i < myData['passengers'].length; i++) {
+							createMarkers(myData['passengers'][i]);
 						}
 						createMyMarker();
 						
@@ -93,7 +93,8 @@
 						alert("Couldn't get the JSON");
 					}
 				}
-				xml.send("username=6MZk3neb&lat="+ curLoc.lat() +"&lng="+ curLoc.lng());
+	//			xml.send("username=6MZk3neb&lat="+ curLoc.lat() +"&lng="+ curLoc.lng());
+				xml.send("username=JANET&lat="+ curLoc.lat() +"&lng="+ curLoc.lng());
 			}
 			function createMarkers(idMark) {
 				var theLoc; 				
