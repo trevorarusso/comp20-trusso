@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Security and Privacy Assessment of Private Car Service</title>
+		<link rel = "stylesheet" href = "stylesheet.css" />
+	</head>
+	<body>
+		<h1>Trevor Russo's Security Evaluation of the Private Car Service</h1>
+		<h2>Introduction</h2>
+		<div id="Intro">
+			<p>The product that I am examining today is known as the Private Car Service. It is a combination of a server that using a MongoDB database, holds data of clients who send POST requests to the server with the information of the username, the latitute and the longitude and a client that gets the location of the user through geolocation and displays the user as an icon on a Google Maps map object along with data recieved from the POST request. Addtionally, there are two other paths, an index '/' path that displays all the POST requests of vehicles in the database and a '/passenger.json' path that given a query for a username, it returns a JSON of requests from those users. There are two types of users, vehicles and passengers. The vehicles are chosen from a select group of usernames, while the passengers are made up of all the other usernames.<br>However, with user data and requests such as this, there are going to be security concerns, and my job is going to be to go over this application and determine what security flaws exist in the program currently in detail, how bad the risks are to the program, where the flaw exists in the application, and how to fix the problem. I will also make a conclusion to the considerations and cost recommendations to the overall health of the program.</p>
+		</div>
+		<h2>Methodology</h2>
+		<div id="Methods">
+			<p>For my methodology, I relied mostly on simple techniques. For a broad overview, I tried to focus on techniques that OWASP designated as their top security concerns like Injection and XSS. Additionally, I consulted OWASP's ZAP tool, but the security concerns there were related to the more pertinent tasks or would not be incredibly relevant to the type of website being examined. I used curl for all three issues, and I black boxed for all three issues, only looking at the code after curling for the first time. Finally, for testing, I used my Assignment 2 with modified code to make it a vehicle.</p>
+		</div>
+		<h2>Abstract of Findings</h2>
+		<div id="Abstract">
+			<p>Upon reaching my findings, I found that there were numerous security concerns pertaining to the sending of data. While the writer of the server code made positive steps to avoid nonSQL injections, the basic fact remains that any person with knowledge of the route can send any sort of data under the "username" value, in any number, from any IP address and any type of HTML data excluding explicit scripts. This means that much of the data can be falsified from any location without authentication or verification. For instance, I can send a request for data to appear from any location that I want to. Additionally, there is no mechanism to limit the number of data that I can send at a time, so theoretically I could have a script to continually overload the servers. Finally, the lack of validation and checking for HTML text means that I can insert malicious functions and scripts and code if anyone were to click on the google maps marker.</p>
+		</div>
+		<h2>Issues Found</h2>
+		<h3>CORS</h3>
+		<div id="cors">
+			<p>The issue that I have identified here is the fact that Cross-Origin Resource Sharing is enabled for any origin, meaning that anyone can send data without scrutinization. This issue is found in the index.js file of the Assignment 3 code. Based upon the fact that there is no authentication for any data and that it essentially compromises the integrity of all the data, this would be rated a High in my view. I found this issue on line 9 of index.js. For proof of vulnerability, it is pretty clear that I can curl the data from any location.</p>
+			<img src="Flaw1.png"/>
+			<p>In terms of resolution, I would say that there needs to be some sort of authentication system that takes in credentials before allowing a POST request. As far as the server-side code, this can be done by enabling the header "Access-Control-Allow-Credentials" and setting it to true which will disregard any XmlHttpRequest without credentials attached.</p>
+		</div>
+		<h3>No Limit on Curl Requests</h3>
+		<div id="limit">
+			<p>The issue that I have identified here is the fact that there is no limit to the amount of curl requests and POST requests that can be sent to /rides. This issue I found not in the code but by simply writing a script to send the same JSON Request over and over without stopping. This issue isn't that big of a deal as the last one due to the sheer difficulty in setting it up, so I would rate it a Low-Medium issue. In more detail, my fear is that if multiple IPs decide to execute a DDos attack on the server by overloading the server with requests, it could overflow the database and take down the website.</p>
+			<img src="Flaw2.png"/>
+			<p>In terms of resolution, I would say that there needs to be some limit on the number of times in a certain amount of time that one can curl. For instance, the curl_set_opt(CURLOPT_MAXCONNECTS) function can be limited in order to limit connections.</p>
+		</div>
+		<h3>XSS Vulnerability</h3>
+		<div id="xss">
+			<p>The issue that I have identified here is the fact that here is no validation to stop XSS attacks. This issue is located in the index.js file. This issue is a medium level of risk due to the difficulty of pulling it off in an infowindow, but not low due to the amount of harm that can be caused. The issue comes in a POST request, where one is able to take the username field and edit it to have HTML style text, and send an alert onerror such as a script or a regular alert once the box is clicked.</p>
+			<img src="Flaw3.png"/>
+			<p>To resolve this problem it is incredibly easy. All the writer of the code needs to do is to use the validator and perform an escape on the request that the server recieves, and that should fix the problem.</p>
+		</div>
+		<h2>Conclusion</h2>
+		<div id="Conc">
+			<p>My conclusions toward this code is that there are lots of problems but that they are not terrible problems to fix. The XSS thing is literally one line, so it should be incredibly easy to implement. However, the CORS problem is much harder as they need to add an identification system in order to authorize users so that they don't send in fraudulent data, and also the overflow issue will be difficult but not impossible as there is just a couple lines of code and a couple of functions that need to be enabled.</p>
+		</div>
+	</body>
+</html>
